@@ -1,5 +1,5 @@
 import sys
-import logging
+from src.components.logger import logging
 
 def error_msg(error, error_detail: sys):
     _, _, exc_tb = error_detail.exc_info()  # Extract traceback info
@@ -19,10 +19,3 @@ class CustomException(Exception):
         return self.errormsg
 
 
-# ✅ Main Execution Block
-if __name__ == "__main__":
-    try:
-        a = 1 / 0
-    except Exception as e:
-        logging.info("Zero Division Error")
-        raise CustomException(e, sys)

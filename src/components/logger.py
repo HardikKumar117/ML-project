@@ -12,5 +12,3 @@ logging.basicConfig(
     level=logging.INFO
     )
 
-if __name__ == "__main__":
-    logging.info("This is a log message") # this would be logged in the file
