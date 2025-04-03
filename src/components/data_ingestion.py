@@ -4,7 +4,8 @@ from src.components.exception import CustomException
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
-from src.components.data_transformation import Data_Transformation
+from src.components.data_transformation import Data_Transformation,DataTransformationConfig
+from src.components.model_training import ModelTrainer
 
 
  # stores the information like where diffrent type of data is stored
@@ -51,10 +52,14 @@ class DataIngestion:
 if __name__=="__main__":
     obj=DataIngestion()
     
-    train_df,test_df=obj.initiate_data_ingestion()
+    train_data,test_data=obj.initiate_data_ingestion()
 
     data_transformation=Data_Transformation()
-    data_transformation.initiate_data_transformation(train_df,test_df) 
+    train_array,test_array,preprocessorpath= data_transformation.initiate_data_transformation(train_data,test_data) 
+
+    modeltrainer=ModelTrainer()
+    modeltrainer.initiate_model_training(train_array,test_array)
+
 
    
             
