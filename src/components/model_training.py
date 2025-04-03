@@ -48,7 +48,69 @@ class ModelTrainer:
         "XGBRegressor":XGBRegressor(),
         "CatBoostRegressor":CatBoostRegressor()
         }
-      model_report:dict=evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models)
+      
+      params = {
+    "LinearRegression": {
+        "fit_intercept": [True, False],
+        #"copy_X": [True, False],
+        "n_jobs": [-1, None],
+        "positive": [True, False]
+    },
+    "Ridge": {
+        "alpha": [0.01, 0.1, 1, 10, 100],
+        "solver": ["auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag", "lbfgs"]
+    },
+    "Lasso": {
+        "alpha": [0.0001, 0.001, 0.01, 0.1, 1, 10],
+        "max_iter": [1000, 5000, 10000]
+    },
+    "KNeighborsRegressor": {
+        "n_neighbors": [3, 5, 10, 15],
+        "weights": ["uniform", "distance"],
+        "algorithm": ["auto", "ball_tree", "kd_tree", "brute"],
+        "p": [1, 2]  # 1: Manhattan, 2: Euclidean
+    },
+    "DecisionTreeRegressor": {
+        "criterion": ["squared_error", "friedman_mse", "absolute_error"],
+        "max_depth": [None, 5, 10, 20, 30],
+        "min_samples_split": [2, 5, 10],
+        "min_samples_leaf": [1, 2, 5, 10]
+    },
+    "RandomForestRegressor": {
+        "n_estimators": [10, 50, 100, 200, 500],
+        "criterion": ["squared_error", "absolute_error"],
+        "max_depth": [None, 5, 10, 20, 30],
+        "min_samples_split": [2, 5, 10],
+        "min_samples_leaf": [1, 2, 5, 10],
+        "bootstrap": [True, False]
+    },
+    "GradientBoostingRegressor": {
+        "n_estimators": [50, 100, 200, 500],
+        "learning_rate": [0.001, 0.01, 0.1, 0.2],
+        "max_depth": [3, 5, 10, 20],
+        "subsample": [0.5, 0.7, 1.0]
+    },
+    "AdaBoostRegressor": {
+        "n_estimators": [50, 100, 200, 500],
+        "learning_rate": [0.001, 0.01, 0.1, 1.0]
+    },
+    "XGBRegressor": {
+        "n_estimators": [50, 100, 200, 500],
+        "learning_rate": [0.01, 0.1, 0.2, 0.3],
+        "max_depth": [3, 5, 7, 10],
+        "subsample": [0.5, 0.7, 1.0],
+        "colsample_bytree": [0.5, 0.7, 1.0]
+    },
+    "CatBoostRegressor": {
+        "iterations": [100, 200, 500],
+        "learning_rate": [0.01, 0.05, 0.1, 0.2],
+        "depth": [4, 6, 8, 10],
+        "l2_leaf_reg": [1, 3, 5, 10]
+    }
+}
+
+
+      model_report:dict=evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models,params=params)
 
       best_model_score=max(sorted(list(model_report.values())))
 
