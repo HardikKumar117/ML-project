@@ -6,8 +6,7 @@ from src.components.exception import CustomException
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 import dill
-import warnings
-warnings.filterwarnings("ignore")
+
  
 def save_object(filepath,obj):
     try:
